@@ -1,0 +1,10 @@
+# Ignore CMake build folders
+build/
+out/
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore the actual compiled program
+*.exe
+*.out
