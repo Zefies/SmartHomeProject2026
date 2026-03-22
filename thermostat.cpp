@@ -25,5 +25,5 @@ void Thermostat::display() const
 
 void Thermostat::update()
 {
-    // Nothing fancy needed
+    
 }

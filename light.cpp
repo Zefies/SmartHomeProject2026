@@ -37,5 +37,4 @@ void Light::display() const
 
 void Light::update()
 {
-    // hmm
 }

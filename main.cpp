@@ -11,6 +11,7 @@ int main()
     SmartHomeManager manager;
 
     // Create devices
+    // Note: Allocates memory dynamically
     manager.addLightingDevice(new Light("Living Room Light", 1));
     manager.addEnvironmentDevice(new Thermostat("Main Thermostat", 2));
     manager.addLightingDevice(new DoorLock("Front Door", 3));
@@ -38,8 +39,10 @@ int main()
             else if (choice == 2)
             {
                 auto device = manager.findDevice(1);
+                // Note: safely converts base pointer to derived pointer.
                 auto light = dynamic_cast<Light*>(device);
                 if (light) light->turnOn();
+                cout << "Lights have been turned on.\n"; 
             }
             else if (choice == 3)
             {
@@ -56,6 +59,7 @@ int main()
                 auto device = manager.findDevice(3);
                 auto door = dynamic_cast<DoorLock*>(device);
                 if (door) door->lock();
+                cout << "Door has been locked.\n";
             }
             else if (choice == 5)
             {

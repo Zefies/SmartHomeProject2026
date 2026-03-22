@@ -9,6 +9,8 @@ using namespace std;
 class SmartHomeManager
 {
 private:
+    // Vectors to store devices
+    // Note: Stores different types of devices in one container type.
     vector<SmartDevice*> lighting;
     vector<SmartDevice*> security;
     vector<SmartDevice*> environment;
@@ -25,7 +27,7 @@ public:
     // Find device by ID
     SmartDevice* findDevice(int id) const;
 
-    // Destructor to clean memory
+    // Destructor
     ~SmartHomeManager();
 };
 

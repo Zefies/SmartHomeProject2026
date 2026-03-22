@@ -1,0 +1,40 @@
+Inheritance
+{
+    - Inheritance is a mechanism that allows a derived class to inherit the properties and methods of a base class.
+
+Light : public SmartDevice
+|- Reuse base functionality
+}
+
+Abstraction
+{
+    - Abstraction is a mechanism that allows a derived class to provide a partial implementation of a base class.
+
+virtual void display() = 0;
+|- Forces structure without implementation
+}
+
+Polymorphism
+{
+    - Polymorphism is a mechanism that allows a derived class to be treated as an instance of the base class.
+
+vector<SmartDevice*>
+|- Treat different objects the same.
+}
+
+Encapsulation
+{
+    - Encapsulation is a mechanism that allows a derived class to hide the implementation details of a base class.
+
+private variables + getters
+|- Protect data.
+}
+
+
+Interfaces
+{
+    - Interfaces are a mechanism that allows a derived class to declare a contract that it must adhere to.
+
+Switchable
+|- Add optional capabilities.
+}

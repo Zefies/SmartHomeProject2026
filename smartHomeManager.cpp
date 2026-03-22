@@ -21,6 +21,7 @@ void SmartHomeManager::addEnvironmentDevice(SmartDevice* device)
 }
 
 // Display everything
+// Note: d is a pointer to a SmartDevice object. **RUNTIME POLYMORPHISM**
 void SmartHomeManager::displayAll() const
 {
     cout << "--- Lighting System ---" << endl;
