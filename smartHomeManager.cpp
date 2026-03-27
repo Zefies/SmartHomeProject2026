@@ -27,6 +27,8 @@ void SmartHomeManager::displayAll() const
     cout << "--- Lighting System ---" << endl;
     for (auto d : lighting)
         d->display();
+        // Note: Cool thing about this is through the use of Vtable, 
+        //      it finds the type of object and calls the correct function i.e. d turns into DoorLock::
 
     cout << "--- Security System ---" << endl;
     for (auto d : security)
@@ -38,6 +40,7 @@ void SmartHomeManager::displayAll() const
 }
 
 // Find device by ID
+// -Scans through subsystems to find the device with the given ID. If not found, throws an exception.
 SmartDevice* SmartHomeManager::findDevice(int id) const
 {
     for (auto d : lighting)

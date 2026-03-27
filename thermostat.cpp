@@ -24,6 +24,5 @@ void Thermostat::display() const
 }
 
 void Thermostat::update()
-{
-    
+{  
 }

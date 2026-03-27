@@ -1,8 +1,10 @@
 #include <iostream>
+#include <vector>
 #include "SmartHomeManager.h"
 #include "Light.h"
 #include "Thermostat.h"
 #include "DoorLock.h"
+#include "Exceptions.h"
 
 using namespace std;
 
@@ -10,73 +12,73 @@ int main()
 {
     SmartHomeManager manager;
 
-    // Create devices
-    // Note: Allocates memory dynamically
+    // 1. Setup: Adding devices to the manager
     manager.addLightingDevice(new Light("Living Room Light", 1));
     manager.addEnvironmentDevice(new Thermostat("Main Thermostat", 2));
-    manager.addLightingDevice(new DoorLock("Front Door", 3));
+    manager.addSecurityDevice(new DoorLock("Front Door", 3));
 
-    int choice;
+    // 2. Initial check: Shows state of all devices
+    cout << "-/- Initial System Audit -/-" << endl;
+    manager.displayAll();
 
-    while (true)
-    {
-        cout << "\n---/// Smart Home Control ///---\n";
-        cout << "1. Show All Devices\n";
-        cout << "2. Turn ON Light\n";
-        cout << "3. Set Temperature\n";
-        cout << "4. Lock Door\n";
-        cout << "5. Unlock Door\n";
-        cout << "6. Exit\n";
-        cout << "Choice: ";
-        cin >> choice;
+    // 3. Demo Interaction: Find the door and unlock it
+    cout << "\n-//- Manual Interaction: Setting Light Brightness (ID: 1) -//-" << endl;
+    try {
+        // Find the device pointer
+        SmartDevice* device = manager.findDevice(1);
+        // Convert the generic pointer to a specific pointer
+        Light* myLight = dynamic_cast<Light*>(device);
 
-        try
-        {
-            if (choice == 1)
-            {
-                manager.displayAll();
-            }
-            else if (choice == 2)
-            {
-                auto device = manager.findDevice(1);
-                // Note: safely converts base pointer to derived pointer.
-                auto light = dynamic_cast<Light*>(device);
-                if (light) light->turnOn();
-                cout << "Lights have been turned on.\n"; 
-            }
-            else if (choice == 3)
-            {
-                float temp;
-                cout << "Enter temperature: ";
-                cin >> temp;
-
-                auto device = manager.findDevice(2);
-                auto t = dynamic_cast<Thermostat*>(device);
-                if (t) t->setTemperature(temp);
-            }
-            else if (choice == 4)
-            {
-                auto device = manager.findDevice(3);
-                auto door = dynamic_cast<DoorLock*>(device);
-                if (door) door->lock();
-                cout << "Door has been locked.\n";
-            }
-            else if (choice == 5)
-            {
-                auto device = manager.findDevice(3);
-                auto door = dynamic_cast<DoorLock*>(device);
-                if (door) door->unlock();
-            }
-            else if (choice == 6)
-            {
-                break;
-            }
-        }
-        catch (exception& e)
-        {
-            cout << "Error: " << e.what() << endl;
+        if (myLight) {
+            myLight->turnOn();
+            myLight->setBrightness(85);
+            cout << "Successfully set " << myLight->getName() << " to 85% brightness." << endl;
+            
         }
     }
+    catch (const InvalidValueException& e) {
+        cout << "Custom Error: " << e.what() << endl;
+    }
+    catch (const exception& e) {
+        cout << "Standard Error: " << e.what() << endl;
+    }
+
+    // --- Manual Interaction: Thermostat (ID: 2) ---
+    cout << "\n-//- Manual Interaction: Adjusting Thermostat (ID: 2) -//-" << endl;
+    try {
+        SmartDevice* device = manager.findDevice(2);
+        
+        // FIX
+        Thermostat* myThermo = dynamic_cast<Thermostat*>(device);
+
+        if (myThermo) {
+            myThermo->setTemperature(80);
+    
+            cout << "Successfully adjusted " << myThermo->getName() << " to 80" << endl;
+        }
+    }
+    catch (const exception& e) {
+        cout << "Error: " << e.what() << endl;
+    }
+
+    cout << "\n-//- Interaction: Unlocking Front Door (ID: 3) -//-" << endl;
+    try {
+        SmartDevice* device = manager.findDevice(3);
+
+        DoorLock* myDoor = dynamic_cast<DoorLock*>(device);
+
+        if (myDoor) {
+            myDoor->unlock();
+            cout << "Successfully sent 'Unlock' command to: " << myDoor->getName() << endl;
+        }
+    }
+    catch (const exception& e) {
+        cout << "Error: " << e.what() << endl;
+    }
+    
+    // 4. Final Audit: Verify changes made to system
+    cout << "\n-///- Final System Audit -///-" << endl;
+    manager.displayAll();
 
     return 0;
 }

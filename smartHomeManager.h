@@ -10,7 +10,8 @@ class SmartHomeManager
 {
 private:
     // Vectors to store devices
-    // Note: Stores different types of devices in one container type.
+    // Note: Stores different types of devices in one container type. 
+    //       Vector is best as it provides contiguous memory.
     vector<SmartDevice*> lighting;
     vector<SmartDevice*> security;
     vector<SmartDevice*> environment;
@@ -29,6 +30,8 @@ public:
 
     // Destructor
     ~SmartHomeManager();
+    // Note: SmartHomeManager takes ownsership of the device pointers. 
+    //       When destroyed, it must delete all devices to prevent memory leaks.
 };
 
 #endif

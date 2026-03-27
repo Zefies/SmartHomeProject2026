@@ -33,5 +33,4 @@ void DoorLock::display() const
 
 void DoorLock::update()
 {
-    // nothing
 }
